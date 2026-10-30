@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="程蓓丽 · 双师型教师证书展厅">
+		<title>证书展厅 · 程蓓丽</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="../css/style.css">
+		<style>
+			.page-hero {
+				padding: calc(var(--nav-h) + 3rem) 0 2rem;
+			}
+
+			.page-hero h1 {
+				font-family: var(--font-display);
+				font-size: clamp(1.8rem, 3vw, 2.5rem);
+				color: var(--forest-deep);
+				margin-bottom: 0.5rem;
+			}
+
+			.page-hero p {
+				color: var(--muted);
+				max-width: 36rem;
+			}
+
+			.empty-photo {
+				aspect-ratio: 3/4;
+				border-radius: var(--radius);
+				border: 2px dashed rgba(45, 106, 90, 0.3);
+				background: linear-gradient(160deg, #d7e5df, #c5d8cf);
+				display: grid;
+				place-items: center;
+				text-align: center;
+				color: var(--muted);
+				padding: 1rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="scroll-progress" id="scrollProgress"></div>
+
+		<header class="nav scrolled" id="nav">
+			<div class="nav-inner">
+				<a href="../index.html" class="logo">
+					<span class="logo-mark">双</span>
+					程蓓丽 · 双师档案
+				</a>
+				<nav class="nav-links" id="navLinks">
+					<a href="../index.html#about">关于我</a>
+					<a href="../index.html#teaching">育人理念</a>
+					<a href="../index.html#dual">双师素养</a>
+					<a href="../index.html#gallery">资质证书</a>
+					<a href="../index.html#achievements">教学成果</a>
+					<a href="gallery.html" class="active">证书展厅</a>
+					<a href="../index.html#contact" class="nav-cta">返回主页</a>
+				</nav>
+				<button class="nav-toggle" id="navToggle" aria-label="打开菜单">
+					<span></span><span></span><span></span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="page-hero">
+				<div class="container">
+					<div class="section-kicker">GALLERY</div>
+					<h1>证书与佐证材料展厅</h1>
+					<p>完整罗列双师型评价所需材料，含证件照与全部证书扫描件，点击即可放大查阅。</p>
+				</div>
+			</section>
+
+			<section class="section" style="padding-top: 0;">
+				<div class="container">
+					<div class="gallery-toolbar">
+						<button class="filter-btn active" data-filter="all">全部</button>
+						<button class="filter-btn" data-filter="edu">学历学籍</button>
+						<button class="filter-btn" data-filter="teach">教师资质</button>
+						<button class="filter-btn" data-filter="skill">职业技能</button>
+						<button class="filter-btn" data-filter="award">获奖成果</button>
+						<button class="filter-btn" data-filter="id">身份核验</button>
+						<button class="filter-btn" data-filter="photo">双师认证</button>
+					</div>
+					<div class="gallery-grid" id="galleryGrid"></div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<div class="container">
+				<div class="brand">程蓓丽 · 证书展厅</div>
+				<p><a href="../index.html">← 返回个人主页</a></p>
+			</div>
+		</footer>
+
+		<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+			<button class="lightbox-close" id="lightboxClose" aria-label="关闭">×</button>
+			<button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="上一张">‹</button>
+			<button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="下一张">›</button>
+			<div class="lightbox-inner">
+				<div class="lightbox-img"><img id="lightboxImage" src="" alt=""></div>
+				<div class="lightbox-info">
+					<span class="tag" id="lightboxTag"></span>
+					<h3 id="lightboxTitle"></h3>
+					<p id="lightboxDesc"></p>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			(function() {
+				const PATH = "../image/";
+				const ITEMS = [{
+						id: "image_1",
+						src: PATH + "image_1.jpg",
+						title: "毕业证书",
+						tag: "学历学籍",
+						category: "edu",
+						desc: "河北工程大学园艺专业本科毕业证书。"
+					},
+					{
+						id: "image_2",
+						src: PATH + "image_2.jpg",
+						title: "公式证明",
+						tag: "学历学籍",
+						category: "photo",
+						desc: "与学历/专业相关的证明材料。"
+					},
+					{
+						id: "image_15",
+						src: PATH + "image_15.jpg",
+						title: "双师型教师认定申请表",
+						tag: "学历学籍",
+						category: "photo",
+						desc: "双师型教师认定申请表，与公式证明一并查阅。"
+					},
+					{
+						id: "image_3",
+						src: PATH + "image_3.jpg",
+						title: "教师资格证",
+						tag: "教师资质",
+						category: "teach",
+						desc: "教师资格证书，双师型教师侧核心材料。"
+					},
+					{
+						id: "image_4",
+						src: PATH + "image_4.jpg",
+						title: "身份证",
+						tag: "身份核验",
+						category: "id",
+						desc: "身份证件扫描件，用于材料真实性核验。"
+					},
+					{
+						id: "image_5",
+						src: PATH + "image_5.jpg",
+						title: "教学能力获奖证书",
+						tag: "获奖成果",
+						category: "award",
+						desc: "2023年邢台市职业院校技能大赛教学能力比赛三等奖。"
+					},
+					{
+						id: "image_6",
+						src: PATH + "image_6.jpg",
+						title: "职业技能等级证书",
+						tag: "职业技能",
+						category: "skill",
+						desc: "职业技能等级证书原件。"
+					},
+					{
+						id: "image_7",
+						src: PATH + "image_7.jpg",
+						title: "技能证书查询（1）",
+						tag: "职业技能",
+						category: "skill",
+						desc: "职业技能等级证书官方查询截图之一。"
+					},
+					{
+						id: "image_8",
+						src: PATH + "image_8.jpg",
+						title: "技能证书查询（2）",
+						tag: "职业技能",
+						category: "skill",
+						desc: "职业技能等级证书官方查询截图之二。"
+					},
+					// {
+					// 	id: "image_9",
+					// 	src: PATH + "image_9.jpg",
+					// 	title: "指导学生获奖照片",
+					// 	tag: "获奖成果",
+					// 	category: "award",
+					// 	desc: "指导学生技能大赛获奖合影。"
+					// },
+					{
+						id: "image_10",
+						src: PATH + "image_10.jpg",
+						title: "助理讲师",
+						tag: "教师资质",
+						category: "teach",
+						desc: "助理讲师（植物保护）资格材料。"
+					},
+					// {
+					// 	id: "image_11",
+					// 	src: PATH + "image_11.jpg",
+					// 	title: "证件照",
+					// 	tag: "证件照",
+					// 	category: "photo",
+					// 	desc: "程蓓丽老师证件照，用于双师型评价材料身份对照。"
+					// },
+					{
+						id: "image_12",
+						src: PATH + "image_12.jpg",
+						title: "2024-2025 先进班集体",
+						tag: "获奖成果",
+						category: "award",
+						desc: "2024—2025 学年先进班集体荣誉，体现班主任带班成效。"
+					},
+					{
+						id: "image_13",
+						src: PATH + "image_13.jpg",
+						title: "2024 优秀考核证书",
+						tag: "获奖成果",
+						category: "award",
+						desc: "2024 年度考核优秀证书。"
+					},
+					{
+						id: "image_14",
+						src: PATH + "image_14.jpg",
+						title: "2025 考核优秀",
+						tag: "获奖成果",
+						category: "award",
+						desc: "2025 年度考核优秀证书。"
+					},
+				];
+
+				const grid = document.getElementById("galleryGrid");
+				let filter = "all";
+				let index = 0;
+
+				function list() {
+					return ITEMS.filter((i) => filter === "all" || i.category === filter);
+				}
+
+				function render() {
+					const data = list();
+					grid.innerHTML = data.map((c, i) => `
+          <article class="gallery-card" data-index="${i}">
+            <div class="gallery-thumb">
+              <img src="${c.src}" alt="${c.title}" loading="lazy">
+              <div class="gallery-overlay">点击放大</div>
+            </div>
+            <div class="gallery-body"><span class="tag">${c.tag}</span><h3>${c.title}</h3><p>${c.desc}</p></div>
+          </article>`).join("");
+
+					grid.querySelectorAll(".gallery-card").forEach((card) => {
+						card.addEventListener("click", () => open(+card.dataset.index));
+					});
+				}
+
+				const lb = document.getElementById("lightbox");
+
+				function open(i) {
+					const data = list();
+					const item = data[(i + data.length) % data.length];
+					index = (i + data.length) % data.length;
+					document.getElementById("lightboxImage").src = item.src;
+					document.getElementById("lightboxImage").alt = item.title;
+					document.getElementById("lightboxTitle").textContent = item.title;
+					document.getElementById("lightboxDesc").textContent = item.desc;
+					document.getElementById("lightboxTag").textContent = item.tag;
+					lb.classList.add("open");
+					document.body.style.overflow = "hidden";
+				}
+
+				function close() {
+					lb.classList.remove("open");
+					document.body.style.overflow = "";
+				}
+
+				document.querySelectorAll(".filter-btn").forEach((btn) => {
+					btn.addEventListener("click", () => {
+						document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove(
+						"active"));
+						btn.classList.add("active");
+						filter = btn.dataset.filter;
+						render();
+					});
+				});
+
+				document.getElementById("lightboxClose").onclick = close;
+				document.getElementById("lightboxPrev").onclick = () => open(index - 1);
+				document.getElementById("lightboxNext").onclick = () => open(index + 1);
+				lb.addEventListener("click", (e) => {
+					if (e.target === lb) close();
+				});
+				document.addEventListener("keydown", (e) => {
+					if (!lb.classList.contains("open")) return;
+					if (e.key === "Escape") close();
+					if (e.key === "ArrowLeft") open(index - 1);
+					if (e.key === "ArrowRight") open(index + 1);
+				});
+
+				const navToggle = document.getElementById("navToggle");
+				const navLinks = document.getElementById("navLinks");
+				navToggle?.addEventListener("click", () => navLinks.classList.toggle("open"));
+
+				window.addEventListener("scroll", () => {
+					const st = window.scrollY;
+					const docH = document.documentElement.scrollHeight - window.innerHeight;
+					document.getElementById("scrollProgress").style.width = (docH ? (st / docH) * 100 : 0) + "%";
+				}, {
+					passive: true
+				});
+
+				render();
+			})();
+		</script>
+	</body>
+</html>
